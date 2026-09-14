@@ -275,7 +275,6 @@
   background-size:100% auto,100% auto;background-position:0 0,0 3vw;background-repeat:no-repeat;}
 @media (min-width:900px){#rec697220506 .t396__artboard::after{width:100vw;height:37.4vw;bottom:-17.8vw;background-position:0 0,0 1.5vw;}}
 
-/* ---------- grana sui box traslucidi (Dove e quando, regalo, conferma): meno effetto vetro ---------- */
-:root{--inv-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");}
-.inv-info,.inv-rsvp-card{background-color:rgba(6,32,46,.72);background-image:var(--inv-noise);background-size:180px 180px;}
-#rec697220506 .tn-atom[field="tn_text_1701470414692"]{background-color:rgba(120,44,22,.74) !important;background-image:var(--inv-noise) !important;background-size:180px 180px !important;}
+/* ---------- box traslucidi un po' più coprenti (senza grana) ---------- */
+.inv-info,.inv-rsvp-card{background-color:rgba(6,32,46,.72);}
+#rec697220506 .tn-atom[field="tn_text_1701470414692"]{background-color:rgba(120,44,22,.74) !important;}
