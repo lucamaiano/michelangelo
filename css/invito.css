@@ -1,0 +1,281 @@
+/* =========================================================================
+   Invito — hero moderno, barra fissa e componenti custom (form, IBAN, countdown)
+   Il resto della pagina è il layout Tilda originale (index.html) con i suoi stili.
+   ========================================================================= */
+@font-face{
+  font-family:'Felidae Hero';
+  src:url('../cdn/static/tild3962-3339-4037-b936-376362666663/Felidae.woff') format('woff');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+:root{
+  --inv-navy:#0a3447; --inv-navy-2:#11506d; --inv-rust:#b24a2b; --inv-yellow:#ffdc4c;
+  --inv-sky:#b6dae5; --inv-sage:#c3d9d3; --inv-ink:#191919; --inv-cream:#fbf6ea; --inv-white:#fff;
+  --inv-font:'Roboto',Arial,sans-serif;
+  --inv-display:'Felidae Hero','Felidae',Georgia,serif;
+  --inv-ease:cubic-bezier(.22,.61,.36,1);
+  --inv-gutter:clamp(20px,5vw,64px);
+}
+[class^="inv-"],[class*=" inv-"],.inv-nav *,.inv-hero *{box-sizing:border-box;}
+/* Tilda: #allrecords a{color:#ff8562} — riporto i colori dei link custom */
+#allrecords .inv-nav__brand{color:#fff;}
+#allrecords .inv-nav__links a{color:rgba(255,255,255,.82);}
+#allrecords .inv-nav__links a:hover{color:var(--inv-yellow);}
+#allrecords .inv-nav__cta,#allrecords .inv-btn{color:var(--inv-navy);}
+
+/* Tilda su mobile mette overflow:auto ai .t-rec: il wrapper dell'hero ritaglierebbe la carta strappata e diventerebbe scorrevole */
+#rec-hero{overflow:visible !important;}
+
+/* ---------- barra fissa ---------- */
+.inv-nav{
+  position:fixed;left:0;right:0;top:0;z-index:100;
+  background:rgba(10,52,71,.72);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:var(--inv-font);
+  transition:transform .4s var(--inv-ease);
+}
+.inv-nav.is-hidden{transform:translateY(-100%);}
+.inv-nav__inner{max-width:1240px;margin:0 auto;padding:12px var(--inv-gutter);display:flex;align-items:center;gap:20px;}
+.inv-nav__brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--inv-display);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;white-space:nowrap;}
+.inv-nav__star{width:16px;height:16px;fill:var(--inv-yellow);flex:none;}
+.inv-nav__links{display:none;gap:clamp(14px,2vw,30px);margin-left:auto;list-style:none;padding:0;margin-top:0;margin-bottom:0;}
+.inv-nav__links a{color:rgba(255,255,255,.82);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s;}
+.inv-nav__links a:hover{color:var(--inv-yellow);border-color:var(--inv-yellow);}
+.inv-nav__cta{margin-left:auto;padding:9px 16px;border-radius:999px;background:var(--inv-yellow);color:var(--inv-navy);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;white-space:nowrap;}
+@media (min-width:900px){.inv-nav__links{display:flex;} .inv-nav__cta{margin-left:0;}}
+
+/* ---------- hero ---------- */
+.inv-hero{
+  position:relative;z-index:60;overflow-x:clip; /* sopra gli elementi del blocco ruggine: il bordo strappato deve coprirli */
+  min-height:100vh;min-height:100svh; /* svh vince: su mobile l'hero non deve superare lo schermo con la barra del browser */
+  background:radial-gradient(120% 90% at 50% 0%,#12506c 0%,var(--inv-navy) 55%,#06232f 100%);
+  display:flex;align-items:center;
+  padding:clamp(90px,12vh,120px) 0 clamp(250px,62vw,300px);
+  color:#fff;font-family:var(--inv-font);
+}
+.inv-stars{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.inv-star{position:absolute;background:#fff;border-radius:50%;animation:inv-twinkle var(--dur,4s) ease-in-out var(--delay,0s) infinite;}
+@keyframes inv-twinkle{0%,100%{opacity:.15;}50%{opacity:1;}}
+.inv-hero__inner{position:relative;z-index:3;width:100%;max-width:1240px;margin:0 auto;padding:0 var(--inv-gutter);text-align:center;}
+.inv-hero__eyebrow{font-family:var(--inv-font);font-weight:500;text-transform:uppercase;letter-spacing:.22em;font-size:clamp(11px,3vw,13px);color:var(--inv-yellow);opacity:.92;margin:0 0 22px;}
+.inv-hero__title{
+  font-family:var(--inv-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(40px,12.5vw,160px);line-height:.88;letter-spacing:-.01em;
+  color:#fff;display:flex;flex-direction:column;margin:0;
+}
+.inv-hero__word{display:block;}
+.inv-hero__word--outline{color:transparent;-webkit-text-stroke:2px var(--inv-yellow);text-shadow:0 0 40px rgba(255,220,76,.18);}
+@supports not (-webkit-text-stroke:1px red){.inv-hero__word--outline{color:var(--inv-yellow);}}
+.inv-hero__lead{max-width:520px;margin:26px auto 0;color:rgba(255,255,255,.82);font-weight:300;font-size:clamp(15px,4.1vw,18px);line-height:1.55;}
+.inv-btn{
+  display:inline-block;margin-top:28px;padding:15px 34px;border-radius:999px;
+  background:var(--inv-yellow);color:var(--inv-navy);font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  font-size:13px;text-decoration:none;font-family:var(--inv-font);
+  transition:transform .35s var(--inv-ease),box-shadow .35s var(--inv-ease);
+}
+.inv-btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(255,220,76,.28);}
+.inv-hero__planetwrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.inv-hero__planet{
+  position:absolute;left:50%;bottom:-16%;transform:translateX(-50%);
+  width:min(680px,118vw,80svh);z-index:1;
+  filter:drop-shadow(0 -20px 60px rgba(0,0,0,.35));
+  animation:inv-float 9s ease-in-out infinite;
+}
+.inv-hero__planet img{width:100%;height:auto;display:block;}
+@keyframes inv-float{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-18px);}}
+.inv-hero__scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:26px;height:44px;border:2px solid rgba(255,255,255,.4);border-radius:14px;z-index:4;}
+.inv-hero__scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;background:var(--inv-yellow);border-radius:2px;animation:inv-wheel 1.8s ease-in-out infinite;}
+@keyframes inv-wheel{0%{transform:translateY(0);opacity:1;}70%{transform:translateY(16px);opacity:0;}100%{opacity:0;}}
+/* bordo di carta strappata a cavallo del blocco successivo. La striscia bianca dell'SVG è sottile (~25px su 1200)
+   e ondeggia di ±15px: due copie sovrapposte, sfalsate di 18px (in unità SVG), formano una banda continua che copre
+   sempre la cucitura (a 235px su 431 di altezza SVG). Scala s = larghezza/1200. */
+.inv-hero__edge{position:absolute;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;
+  width:200vw;height:74.8vw;bottom:-35.6vw;
+  background-size:100% auto,100% auto;background-position:0 0,0 3vw;background-repeat:no-repeat;}
+@media (min-width:900px){.inv-hero__edge{width:100vw;height:37.4vw;bottom:-17.8vw;background-position:0 0,0 1.5vw;}}
+@media (prefers-reduced-motion:reduce){.inv-hero__planet,.inv-star,.inv-hero__scroll span{animation:none;}}
+
+/* ---------- reveal ---------- */
+.inv-reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--inv-ease),transform .9s var(--inv-ease);}
+.inv-reveal.is-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.inv-reveal{opacity:1;transform:none;transition:none;}}
+
+/* ---------- link dentro i testi Tilda ---------- */
+#allrecords .tn-atom a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;font-weight:500;}
+#allrecords .tn-atom a:hover{opacity:.8;}
+
+/* ---------- countdown (dentro il paragrafo del blocco notte) ---------- */
+.inv-count{display:block;margin:10px 0 12px;font-family:var(--inv-display);color:var(--inv-yellow);line-height:1;}
+.inv-count [data-countdown-n]{display:block;font-size:clamp(56px,12vw,96px);letter-spacing:-.02em;}
+.inv-count small{display:block;font-size:14px;letter-spacing:.3em;text-transform:uppercase;margin-top:6px;font-family:var(--inv-font);color:rgba(255,255,255,.75);}
+
+/* ---------- box IBAN (dentro il paragrafo del blocco regalo) ---------- */
+.inv-iban{display:block;margin:6px auto 0;padding:18px 16px 16px;border:2px solid rgba(255,220,76,.55);border-radius:18px;background:rgba(0,0,0,.14);text-align:center;color:#fff;font-family:var(--inv-font);}
+.inv-iban__label{display:block;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--inv-yellow);}
+.inv-iban__num{display:block;margin:8px 0 10px;font-family:'Roboto',monospace;font-weight:500;font-size:clamp(12px,3.3vw,18px);letter-spacing:.02em;white-space:nowrap;color:#fff;}
+.inv-iban__meta{display:block;font-size:13px;line-height:1.5;color:rgba(255,255,255,.85);margin-bottom:12px;}
+.inv-iban__copy{font:500 13px/1 var(--inv-font);letter-spacing:.08em;text-transform:uppercase;color:var(--inv-navy);background:var(--inv-yellow);border:0;border-radius:999px;padding:12px 22px;cursor:pointer;transition:transform .25s var(--inv-ease),background .25s;}
+.inv-iban__copy:hover{transform:translateY(-2px);}
+.inv-iban__copy.is-done{background:var(--inv-sage);}
+
+/* ---------- "Ci sarete?": card navy come "Dove e quando", con il form dentro ---------- */
+.inv-rsvp-card{font-family:var(--inv-font);color:#fff;text-align:center;background:rgba(6,32,46,.62);border-radius:20px;padding:24px 18px 20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+.inv-rsvp-card h3{margin:0 0 10px;font-family:var(--inv-display);font-weight:400;font-size:40px;line-height:1;color:var(--inv-yellow);}
+.inv-rsvp__quote{margin:0 0 18px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.92);font-style:italic;}
+/* fonte piccola sotto le citazioni (pianeta e ultima sezione) */
+.inv-src{display:block;margin-top:8px;font-family:var(--inv-font);font-style:normal;font-weight:400;font-size:11px !important;line-height:1.4 !important;letter-spacing:.04em;opacity:.7;}
+.inv-rsvp__contact{margin:18px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);font-size:14px;line-height:1.5;color:rgba(255,255,255,.8);}
+.inv-rsvp,.inv-rsvp *{box-sizing:border-box;}
+.inv-rsvp [hidden],.inv-rsvp-card [hidden]{display:none !important;}   /* dopo l'invio spariscono i campi (display delle classi batterebbe [hidden]) */
+.inv-rsvp{display:flex;flex-direction:column;gap:14px;font-family:var(--inv-font);color:#fff;text-align:left;}
+.inv-field{display:block;}
+.inv-field>span,.inv-step>span{display:block;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--inv-yellow);margin-bottom:2px;}
+.inv-rsvp input[type=text],.inv-rsvp textarea,.inv-rsvp input[type=number]{width:100%;box-sizing:border-box;border:0;border-bottom:2px solid rgba(255,255,255,.4);border-radius:0;background:transparent;padding:8px 2px;font:400 16px/1.3 var(--inv-font);color:#fff;outline:none;-webkit-appearance:none;appearance:none;}
+.inv-rsvp textarea{min-height:64px;resize:vertical;}
+.inv-rsvp input::placeholder,.inv-rsvp textarea::placeholder{color:#fff;opacity:.45;}
+.inv-rsvp input:focus,.inv-rsvp textarea:focus{border-bottom-color:var(--inv-yellow);}
+.inv-rsvp input:invalid.is-touched{border-bottom-color:#ffb4a2;}
+.inv-choice{display:flex;gap:8px;flex-wrap:wrap;}
+.inv-choice label{flex:1 1 120px;position:relative;cursor:pointer;}
+.inv-choice input{position:absolute;opacity:0;width:0;height:0;}
+.inv-choice span{display:block;text-align:center;padding:10px 12px;border:2px solid rgba(255,255,255,.55);border-radius:999px;color:#fff;font-size:14px;font-weight:500;letter-spacing:.02em;transition:background .25s,color .25s,border-color .25s;}
+.inv-choice input:checked+span{background:var(--inv-yellow);border-color:var(--inv-yellow);color:var(--inv-navy);}
+.inv-choice input:focus-visible+span{outline:2px solid var(--inv-yellow);outline-offset:2px;}
+.inv-counts{display:flex;gap:14px;}
+.inv-step{flex:1;}
+.inv-step>span{margin-bottom:6px;}
+.inv-step__ctl{display:flex;align-items:center;gap:4px;}
+.inv-step__ctl button{width:38px;height:38px;padding:0;margin:0;flex:none;border:2px solid rgba(255,255,255,.55);border-radius:50%;background:transparent;color:#fff;font:400 20px/1 var(--inv-font);cursor:pointer;display:grid;place-items:center;transition:background .25s,color .25s,border-color .25s;}
+.inv-step__ctl button:hover{background:var(--inv-yellow);border-color:var(--inv-yellow);color:var(--inv-navy);}
+.inv-rsvp .inv-step__ctl input[type=number]{text-align:center;font-size:20px;font-weight:500;padding:4px 0;-moz-appearance:textfield;}
+.inv-step__ctl input::-webkit-outer-spin-button,.inv-step__ctl input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.inv-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+.inv-submit{align-self:stretch;margin-top:6px;padding:14px 28px;border:0;border-radius:999px;background:var(--inv-yellow);color:var(--inv-navy);font:700 13px/1.1 var(--inv-font);letter-spacing:.06em;text-transform:uppercase;text-align:center;cursor:pointer;transition:transform .25s var(--inv-ease),box-shadow .25s;}
+.inv-submit:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,220,76,.35);}
+.inv-submit[disabled]{opacity:.6;cursor:wait;transform:none;}
+.inv-rsvp__msg{margin:0;font:400 15px/1.4 var(--inv-font);text-align:center;}
+.inv-rsvp__ok{color:var(--inv-yellow);font-family:var(--inv-display);font-size:26px;line-height:1.15;}
+.inv-rsvp__err{color:#ffb4a2;}
+#allrecords .inv-rsvp__err a{color:#fff;text-decoration:underline;}
+
+/* ---------- leggibilità dei paragrafi Tilda: più grandi, più contrasto ---------- */
+#rec697220506 .tn-elem[data-elem-type="text"] .tn-atom:not([field="tn_text_1701470552875"]),
+#rec697220525 .tn-elem[data-elem-type="text"] .tn-atom:not([field="tn_text_1701617934912"]){color:#fff8e6 !important;}
+#rec697220520 .tn-elem[data-elem-type="text"] .tn-atom,#rec697220521 .tn-elem[data-elem-type="text"] .tn-atom,#rec697220522 .tn-elem[data-elem-type="text"] .tn-atom{color:#0a3447 !important;}
+#allrecords .tn-elem[data-elem-type="text"] .tn-atom{font-weight:400;}
+#rec697220506 .tn-atom[field="tn_text_1701470414692"],#rec697220506 .tn-atom[field="tn_text_1701470524078"],
+#rec697220511 .tn-atom,#rec697220512 .tn-atom,#rec697220513 .tn-atom[field^="tn_text_170"],
+#rec697220520 .tn-atom[field^="tn_text_1704806"],#rec697220521 .tn-atom[field^="tn_text_1704806"],#rec697220522 .tn-atom[field^="tn_text_170"],
+#rec697220525 .tn-atom[field="tn_text_1701618141195"],#rec697220525 .tn-atom[field="tn_text_1701618069894"],
+#rec697220526 .tn-atom,#rec697220527 .tn-atom[field="tn_text_1701620356610"]{font-size:16px !important;line-height:1.55 !important;}
+@media (min-width:960px){
+  #rec697220506 .tn-atom[field="tn_text_1701470414692"],#rec697220506 .tn-atom[field="tn_text_1701470524078"],
+  #rec697220511 .tn-atom,#rec697220512 .tn-atom,#rec697220513 .tn-atom[field^="tn_text_170"],
+  #rec697220525 .tn-atom[field="tn_text_1701618141195"],#rec697220525 .tn-atom[field="tn_text_1701618069894"],#rec697220526 .tn-atom{font-size:17px !important;line-height:1.6 !important;}
+}
+/* apice del "1º" nel titolo (Felidae non ha il simbolo di grado) */
+.inv-hero__title sup{font-family:var(--inv-font);font-size:.42em;vertical-align:top;line-height:1;position:relative;top:.12em;margin-right:.06em;-webkit-text-stroke:0;color:var(--inv-yellow);}
+.inv-hero__title{font-size:clamp(38px,11.3vw,124px);}
+.inv-hero__w1,.inv-hero__word--outline{display:block;}
+
+
+/* ---------- card "Dove e quando" ---------- */
+.inv-cards{display:grid;gap:14px;grid-template-columns:1fr;font-family:var(--inv-font);}
+@media (min-width:600px){.inv-cards{grid-template-columns:repeat(3,1fr);gap:18px;}}
+.inv-card{background:var(--inv-cream);border:2px solid var(--inv-navy);border-radius:16px;padding:18px 18px 16px;box-shadow:6px 6px 0 var(--inv-navy);color:var(--inv-ink);text-align:left;}
+.inv-card h3{margin:0 0 6px;font-family:var(--inv-display);font-weight:400;font-size:28px;line-height:1;color:var(--inv-navy);}
+.inv-card p{margin:0 0 10px;font-size:15px;line-height:1.5;color:#3a3a3a;}
+.inv-card p strong{color:var(--inv-navy);font-weight:500;}
+#allrecords .inv-card a{display:inline-block;color:var(--inv-rust);font-weight:500;font-size:14px;letter-spacing:.02em;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;}
+#allrecords .inv-card a:hover{color:var(--inv-navy);}
+
+/* ---------- "Il regalo" nel blocco notte ---------- */
+.inv-gift{font-family:var(--inv-font);color:#fff;text-align:center;}
+.inv-gift h3{margin:0 0 8px;font-family:var(--inv-display);font-weight:400;font-size:40px;line-height:1;color:var(--inv-yellow);}
+.inv-gift p{margin:0 0 14px;font-size:16px;line-height:1.55;color:rgba(255,255,255,.9);}
+.inv-gift .inv-iban{background:#11506d;border-color:rgba(255,220,76,.7);}
+
+/* ---------- pannelli traslucidi dietro i testi che stanno sopra pianeti e stelle animati ---------- */
+#rec697220506 .tn-atom[field="tn_text_1701470414692"],#rec697220506 .tn-atom[field="tn_text_1701470524078"],
+#rec697220525 .tn-atom[field="tn_text_1701618141195"],#rec697220525 .tn-atom[field="tn_text_1701618069894"]{
+  background:rgba(120,44,22,.62);border-radius:14px;padding:12px 16px !important;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+}
+.inv-gift{background:rgba(6,32,46,.66);border-radius:20px;padding:22px 18px 18px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+.inv-gift .inv-iban{background:#0f4a66;}
+
+/* ---------- transizione a nuvole (giallo → blu notte), stessi SVG delle nuvole del festeggiato ---------- */
+.inv-clouds{position:relative;height:clamp(170px,44vw,300px);background:#ffdc4c;overflow:hidden;}
+.inv-clouds__l{position:absolute;bottom:0;max-width:none;height:auto;}
+.inv-clouds__l1{right:-6%;bottom:30%;width:84%;}
+.inv-clouds__l2{left:-48%;bottom:26%;width:84%;}
+.inv-clouds__l3{left:-48%;bottom:9%;width:196%;}
+.inv-clouds__l4{right:-8%;bottom:14%;width:84%;}
+.inv-clouds__l5{left:-46%;bottom:10%;width:50%;}
+.inv-clouds__l6{left:-48%;bottom:-2%;width:196%;}
+@media (min-width:960px){
+  .inv-clouds__l1{right:0;bottom:30%;width:43%;}
+  .inv-clouds__l2{left:0;bottom:26%;width:43%;}
+  .inv-clouds__l3{left:0;bottom:9%;width:100%;}
+  .inv-clouds__l4{right:0;bottom:14%;width:43%;}
+  .inv-clouds__l5{left:0;bottom:12%;width:26%;}
+  .inv-clouds__l6{left:0;bottom:-2%;width:100%;}
+}
+
+/* ---------- firma in calce alla sezione Mesdames et Messieurs ---------- */
+.inv-firma{display:block;margin-top:.5em;font-weight:500;letter-spacing:.01em;color:#0a3447;}
+.inv-firma::before{content:'\2014  ';}
+
+/* ---------- "Dove e quando" nel blocco notte ---------- */
+.inv-info{font-family:var(--inv-font);color:#fff;text-align:center;background:rgba(6,32,46,.55);border-radius:20px;padding:24px 18px 22px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+.inv-info h3{margin:0 0 14px;font-family:var(--inv-display);font-weight:400;font-size:40px;line-height:1;color:var(--inv-yellow);}
+.inv-info__item{padding:14px 0 12px;border-top:1px solid rgba(255,255,255,.16);}
+.inv-info__label{display:block;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--inv-yellow);margin-bottom:6px;}
+.inv-info p{margin:0 0 8px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.92);}
+.inv-info p strong{font-weight:500;color:#fff;}
+#allrecords .inv-info a{color:var(--inv-yellow);font-weight:500;font-size:14px;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;}
+#allrecords .inv-info a.inv-info__btn{display:inline-block;margin-top:6px;padding:13px 28px;border-radius:999px;background:var(--inv-yellow);color:var(--inv-navy);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:0;}
+
+/* ---------- schermi bassi (telefoni con la barra del browser): l'hero deve stare in una schermata ---------- */
+@media (max-height:760px) and (max-width:899px){
+  .inv-hero{padding-top:84px;padding-bottom:clamp(200px,40svh,280px);}
+  .inv-hero__eyebrow{margin-bottom:12px;font-size:11px;}
+  .inv-hero__title{font-size:min(11.3vw,7svh);}
+  .inv-hero__lead{margin-top:16px;font-size:14.5px;}
+  .inv-btn{margin-top:16px;padding:13px 28px;}
+  .inv-hero__planet{width:min(118vw,58svh);bottom:-12%;}
+  .inv-hero__scroll{display:none;}
+}
+
+/* ---------- desktop: l'hero è alto esattamente quanto la finestra, il pianeta si adatta all'altezza ---------- */
+@media (min-width:900px){
+  /* testo centrato nello spazio sopra il pianeta (come nella reconstruction), pianeta dimensionato sull'altezza */
+  .inv-hero{--planet-w:clamp(320px,calc((100svh - 480px) * 1.25),600px);height:100svh;min-height:640px;padding:72px 0 calc(var(--planet-w) * .74);align-items:center;}
+  .inv-hero__title{font-size:min(7.6vw,8.6svh);}   /* tre righe: BUON / 1º COMPLEANNO / MICHELANGELO! */
+  .inv-hero__lead{margin-top:18px;}
+  .inv-btn{margin-top:20px;}
+  .inv-hero__planet{width:var(--planet-w);bottom:-10%;}
+}
+
+/* ---------- sezione "E il regalo?": il pianeta che ruota (blocco 522) già da 960px, invece dei tre globi affiancati (blocco 520) ---------- */
+@media (min-width:960px){
+  #rec697220520{display:none !important;}
+  #rec697220522{display:block !important;}
+}
+
+/* ---------- titolo dentro il box del regalo ---------- */
+#rec697220506 .inv-gift__title{display:block;margin:0 0 14px;font-family:var(--inv-display);font-weight:400;font-size:40px;line-height:1;color:var(--inv-yellow);}
+
+/* ---------- bordo strappato tra il regalo (ruggine) e "Ci sarete?": stesso SVG e stessa geometria dell'hero ---------- */
+#rec697220506{overflow:visible !important;}   /* Tilda su mobile mette overflow:auto ai .t-rec: ritaglierebbe la carta strappata */
+#rec697220506 .t396__artboard{overflow:visible !important;}
+#rec697220506 .t396__artboard::after{content:'';position:absolute;left:50%;transform:translateX(-50%);z-index:999;pointer-events:none;
+  width:200vw;height:74.8vw;bottom:-35.6vw;
+  background-image:url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg'),url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg');
+  background-size:100% auto,100% auto;background-position:0 0,0 3vw;background-repeat:no-repeat;}
+@media (min-width:900px){#rec697220506 .t396__artboard::after{width:100vw;height:37.4vw;bottom:-17.8vw;background-position:0 0,0 1.5vw;}}
+
+/* ---------- grana sui box traslucidi (Dove e quando, regalo, conferma): meno effetto vetro ---------- */
+:root{--inv-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.42 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");}
+.inv-info,.inv-rsvp-card{background-color:rgba(6,32,46,.72);background-image:var(--inv-noise);background-size:180px 180px;}
+#rec697220506 .tn-atom[field="tn_text_1701470414692"]{background-color:rgba(120,44,22,.74) !important;background-image:var(--inv-noise) !important;background-size:180px 180px !important;}
