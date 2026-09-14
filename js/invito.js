@@ -117,7 +117,6 @@
   var ok = form.querySelector('.inv-rsvp__ok');
   var err = form.querySelector('.inv-rsvp__err');
   var submit = form.querySelector('.inv-submit');
-  var wa = document.getElementById('rsvpWa');
 
   // stepper
   Array.prototype.forEach.call(form.querySelectorAll('[data-step]'), function (b) {
@@ -145,13 +144,6 @@
       note: form.note.value.trim()
     };
   }
-  function waLink(v) {
-    var msg = v.partecipa === 'Ci saremo'
-      ? 'Ciao! ' + v.nome + ': ci saremo al compleanno di Michelangelo il 1 novembre. Adulti: ' + v.adulti + ', bambini: ' + v.bimbi + (v.note ? '. Note: ' + v.note : '')
-      : 'Ciao! ' + v.nome + ': purtroppo non riusciamo a venire al compleanno di Michelangelo il 1 novembre.' + (v.note ? ' ' + v.note : '');
-    return 'https://wa.me/' + (CONFIG.whatsapp || '') + '?text=' + encodeURIComponent(msg);
-  }
-
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     form.nome.classList.add('is-touched');
@@ -169,7 +161,6 @@
     }
     function failure() {
       submit.disabled = false;
-      if (wa) wa.href = waLink(v);
       err.hidden = false;
     }
 

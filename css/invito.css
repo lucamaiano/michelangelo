@@ -86,13 +86,14 @@
 .inv-hero__scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:26px;height:44px;border:2px solid rgba(255,255,255,.4);border-radius:14px;z-index:4;}
 .inv-hero__scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;background:var(--inv-yellow);border-radius:2px;animation:inv-wheel 1.8s ease-in-out infinite;}
 @keyframes inv-wheel{0%{transform:translateY(0);opacity:1;}70%{transform:translateY(16px);opacity:0;}100%{opacity:0;}}
-/* bordo di carta strappata a cavallo del blocco successivo. La striscia bianca dell'SVG è sottile (~25px su 1200)
-   e ondeggia di ±15px: due copie sovrapposte, sfalsate di 18px (in unità SVG), formano una banda continua che copre
-   sempre la cucitura (a 235px su 431 di altezza SVG). Scala s = larghezza/1200. */
+/* bordo di carta strappata a cavallo del blocco successivo. La striscia bianca dell'SVG è sottile (16-49px in unità SVG,
+   su 431 di altezza) e ondeggia: il suo bordo alto scende fino a 229, quello basso sale fino a 218, quindi nessuna riga
+   dritta è coperta da una copia sola. Quattro copie sfalsate di 10.3px (meno dello spessore minimo, così non restano
+   fessure) formano una banda continua che copre ogni riga tra 229 e 249: la cucitura sta a 239. Scala: 1200 unità = larghezza. */
 .inv-hero__edge{position:absolute;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;
-  width:200vw;height:74.8vw;bottom:-35.6vw;
-  background-size:100% auto,100% auto;background-position:0 0,0 3vw;background-repeat:no-repeat;}
-@media (min-width:900px){.inv-hero__edge{width:100vw;height:37.4vw;bottom:-17.8vw;background-position:0 0,0 1.5vw;}}
+  width:200vw;height:74.8vw;bottom:-35vw;
+  background-size:100% auto;background-position:0 0,0 1.72vw,0 3.45vw,0 5.17vw;background-repeat:no-repeat;}
+@media (min-width:900px){.inv-hero__edge{width:100vw;height:37.4vw;bottom:-17.5vw;background-position:0 0,0 .86vw,0 1.72vw,0 2.59vw;}}
 @media (prefers-reduced-motion:reduce){.inv-hero__planet,.inv-star,.inv-hero__scroll span{animation:none;}}
 
 /* ---------- reveal ---------- */
@@ -270,10 +271,10 @@
 #rec697220506{overflow:visible !important;}   /* Tilda su mobile mette overflow:auto ai .t-rec: ritaglierebbe la carta strappata */
 #rec697220506 .t396__artboard{overflow:visible !important;}
 #rec697220506 .t396__artboard::after{content:'';position:absolute;left:50%;transform:translateX(-50%);z-index:999;pointer-events:none;
-  width:200vw;height:74.8vw;bottom:-35.6vw;
-  background-image:url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg'),url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg');
-  background-size:100% auto,100% auto;background-position:0 0,0 3vw;background-repeat:no-repeat;}
-@media (min-width:900px){#rec697220506 .t396__artboard::after{width:100vw;height:37.4vw;bottom:-17.8vw;background-position:0 0,0 1.5vw;}}
+  width:200vw;height:74.8vw;bottom:-35vw;
+  background-image:url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg'),url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg'),url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg'),url('../cdn/static/tild6330-6332-4864-b761-303134613135/papper_edge_1.svg');
+  background-size:100% auto;background-position:0 0,0 1.72vw,0 3.45vw,0 5.17vw;background-repeat:no-repeat;}
+@media (min-width:900px){#rec697220506 .t396__artboard::after{width:100vw;height:37.4vw;bottom:-17.5vw;background-position:0 0,0 .86vw,0 1.72vw,0 2.59vw;}}
 
 /* ---------- box traslucidi un po' più coprenti (senza grana) ---------- */
 .inv-info,.inv-rsvp-card{background-color:rgba(6,32,46,.72);}
