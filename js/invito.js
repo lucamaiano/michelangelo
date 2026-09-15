@@ -144,11 +144,18 @@
       note: form.note.value.trim()
     };
   }
+  form.nome.addEventListener('input', function () {
+    var nomeErr = document.getElementById('nomeErr');
+    if (nomeErr && form.nome.value.trim()) nomeErr.hidden = true;
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     form.nome.classList.add('is-touched');
     if (form.website.value) return; // honeypot
-    if (!form.nome.value.trim()) { form.nome.focus(); return; }
+    var nomeErr = document.getElementById('nomeErr');
+    if (!form.nome.value.trim()) { if (nomeErr) nomeErr.hidden = false; form.nome.focus(); return; }
+    if (nomeErr) nomeErr.hidden = true;
     var v = values();
     ok.hidden = true; err.hidden = true;
     submit.disabled = true;
